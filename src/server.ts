@@ -1,8 +1,8 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
-import jsonwebtoken from 'jsonwebtoken'
-import * as dotenv from 'dotenv'
-dotenv.config()
+import jsonwebtoken from "jsonwebtoken";
+import * as dotenv from "dotenv";
+dotenv.config();
 import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 import { auth } from "./middleware/auth.middleware";
 
@@ -34,9 +34,9 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
   /**************************************************************************** */
 
-  app.get("/filteredimage", auth, async (req, res) => {
+  app.get("/filteredimage", auth, async (req: Request, res: Response) => {
     try {
-      const { image_url } = req.query;
+      const { image_url }: { image_url: string } = req.query;
       if (!req.query.image_url) {
         res
           .status(422)
@@ -57,32 +57,35 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get("/",  async (req, res) => {
+  app.get("/", async (req: Request, res: Response) => {
     res.send("try GET /filteredimage?image_url={{}}");
   });
 
   const USERS = [
-    {email: 'user1@gmail.com', password: 'user1pass'},
-    {email: 'user2@gmail.com', password: 'user2pass'},
+    { email: "user1@gmail.com", password: "user1pass" },
+    { email: "user2@gmail.com", password: "user2pass" },
+  ];
 
-  ]
+  interface Iuser {
+    email: string;
+    password: string;
+  }
   // login endpoint
-  app.post("/login", (req, res) => {
-    const { email, password } = req.body;
+  app.post("/login", (req: Request, res: Response) => {
+    const { email, password }: { email: string; password: string } = req.body;
     if (!email || !password) {
-      return res.status(422).send('Please, email and password is required')
+      return res.status(422).send("Please, email and password is required");
     }
-    const user = USERS.find((doc) => doc.email === email)
+    const user = USERS.find((doc: Iuser) => doc.email === email);
     if (!user) {
-      return res.status(401).send('Un-authorized')
+      return res.status(401).send("Un-authorized");
     }
     if (user.password !== password) {
-      return res.status(401).send('incorrect password')
-    } 
-      // return jwt
-      const token = jsonwebtoken.sign(user, JWT_SECRET)
-      return res.status(200).send({token})
-    
+      return res.status(401).send("incorrect password");
+    }
+    // return jwt
+    const token = jsonwebtoken.sign(user, JWT_SECRET);
+    return res.status(200).send({ token });
   });
 
   // Start the Server

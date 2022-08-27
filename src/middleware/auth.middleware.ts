@@ -4,24 +4,23 @@ import * as dotenv from 'dotenv'
 import { Request, Response, NextFunction } from 'express';
 dotenv.config()
 
-const JWT_SECRET = process.env.JWT_SECRET || 'thisisasecret';
+const JWT_SECRET: string = process.env.JWT_SECRET || 'thisisasecret';
 
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // const key = process.env.JWT_SECRET;
-        let token = req.headers.authorization || req.body.token || req.query.token || req.headers['x-access-token'];
+        let token: string = req.headers.authorization || req.body.token || req.query.token || req.headers['x-access-token'];
         token = token.split(' ')[1];
         if (token) {
          jsonwebtoken.verify(token, JWT_SECRET, (error: any, decoded: any) => {
-                console.log(error, decoded)
                 if (error) {
                     return res.status(401).send({
                         msg: 'Unauthorized user',
                         error
                     });
                 }
-                (<any>req).user = decoded;
+                // (<any>req).user = decoded;
                 next();
             });
         } else {
