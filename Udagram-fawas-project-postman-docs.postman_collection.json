@@ -14,7 +14,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidXNlcjFwYXNzIiwiaWF0IjoxNjYxNTY0NjE3fQ.p56aDKrbI4tDJ3ibBzw3QxgjJe7zEFDi-cyDqpiuh94",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidXNlcjFwYXNzIiwiaWF0IjoxNjYxNTY1NTUzfQ.skGf38UK1HroAplrjwY73EfuxkpRogSPaTq54FCwDhM",
 							"type": "string"
 						}
 					]
@@ -22,14 +22,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8082/filteredimage?image_url=https://res.cloudinary.com/aufera/image/upload/v1656598789/webpic/phone_cl7gfh.png",
-					"protocol": "http",
+					"raw": "{{base_url}}filteredimage?image_url=https://res.cloudinary.com/aufera/image/upload/v1656598789/webpic/phone_cl7gfh.png",
 					"host": [
-						"localhost"
-					],
-					"port": "8082",
-					"path": [
-						"filteredimage"
+						"{{base_url}}filteredimage"
 					],
 					"query": [
 						{
@@ -56,14 +51,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/login",
-					"protocol": "http",
+					"raw": "{{base_url}}login",
 					"host": [
-						"localhost"
-					],
-					"port": "8082",
-					"path": [
-						"login"
+						"{{base_url}}login"
 					]
 				}
 			},
@@ -131,6 +121,33 @@
 					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidXNlcjFwYXNzIiwiaWF0IjoxNjYxNTY0NjE3fQ.p56aDKrbI4tDJ3ibBzw3QxgjJe7zEFDi-cyDqpiuh94\"\n}"
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://udagram-fawas-project-dev.us-east-1.elasticbeanstalk.com/",
+			"type": "string"
 		}
 	]
 }
