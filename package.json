@@ -29,9 +29,14 @@
   },
   "dependencies": {
     "@types/http-errors": "^1.8.2",
+    "@types/jsonwebtoken": "^8.5.9",
+    "dotenv": "^16.0.1",
     "express": "^4.17.1",
     "http-errors": "^2.0.0",
     "jimp": "^0.16.1",
+    "@types/lodash": "^4.14.184",
+    "jsonwebtoken": "^8.5.1",
+
     "rimraf": "^3.0.2"
   }
 }
