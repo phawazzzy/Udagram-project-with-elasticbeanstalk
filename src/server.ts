@@ -39,21 +39,17 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 
   app.get("/filteredimage", async (req, res) => {
     try {
-      if (isEmpty(req.query.image_url)) {
+      const { image_url } = req.query;
+      if (isEmpty(image_url)) {
         res
           .status(422)
           .send("Please, pass the image_url in the url as query parameter");
       }
-      const processImage = await filterImageFromURL(req.query.image_url);
-      console.log(processImage);
+      const processImage: string = await filterImageFromURL(image_url);
       if (!processImage) {
-        res.status(422).send("Unable to process image");
+        res.status(500).send("Unable to process image");
       }
-      res.status(200).json({
-        status: true,
-        message: `Your processed image is ready for download`,
-        data: { processImage },
-      });
+      res.status(200).sendFile(processImage)
       res.on("finish", ()=> deleteLocalFiles([processImage]))
     } catch (error: any) {
       res.status(422).send();
