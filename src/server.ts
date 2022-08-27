@@ -1,14 +1,5 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { isEmpty } from "lodash";
-import {
-  BadRequest,
-  Conflict,
-  Forbidden,
-  InternalServerError,
-  NotFound,
-  Unauthorized,
-} from "http-errors";
 import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 
 (async () => {
@@ -40,7 +31,7 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
   app.get("/filteredimage", async (req, res) => {
     try {
       const { image_url } = req.query;
-      if (isEmpty(image_url)) {
+      if (!req.query.image_url) {
         res
           .status(422)
           .send("Please, pass the image_url in the url as query parameter");
@@ -51,7 +42,7 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
       }
       res.status(200).sendFile(processImage)
       res.on("finish", ()=> deleteLocalFiles([processImage]))
-    } catch (error: any) {
+    } catch (error) {
       res.status(422).send();
     }
   });
